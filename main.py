@@ -11,13 +11,15 @@ line_width =2
 clicked=False
 pos=[]
 markers = []
-possibles = []
 player = 1
 
 for i in range(8):
     row=[None]*8
     markers.append(row)
-    possibles.append(row)
+
+markers[3][3] = markers[4][4] = 1
+markers[3][4] = markers[4][3] =-1
+possibles = get_possibles(markers,player)
 
 def print_board():
     for row in markers:
@@ -46,11 +48,22 @@ def draw_markers():
             y_pos+=1
         x_pos +=1
 
+def draw_possibles(player,possibles):
+    x_pos=0
+    for x in possibles:
+        y_pos = 0
+        for y in x:
+            if y is not None:
+                pygame.draw.circle(screen,(0,0,0) if player==1 else (255,255,255),(x_pos*100+50,y_pos*100+50),40,2)
+            y_pos += 1
+        x_pos += 1
+
 
 run = True
 while run:
     draw_grid()
     draw_markers()
+    draw_possibles(player,possibles)  
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -61,11 +74,13 @@ while run:
             pos = pygame.mouse.get_pos()
             cell_x = pos[0]//100
             cell_y = pos[1]//100
+            # if possibles[cell_x][cell_y] is not None: 
             if markers[cell_x][cell_y] is None:
                 markers[cell_x][cell_y] = player
-                draw_possibles(markers,player)  
+                # draw_possibles(markers,player) 
                 player *=-1
                 # print_board()
+                possibles = get_possibles(markers,player)
     pygame.display.update()
 
 pygame.quit()
