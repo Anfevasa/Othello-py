@@ -80,6 +80,7 @@ while run:
                 # draw_possibles(markers,player) 
                 player *=-1
                 # print_board()
+                
                 possibles = get_possibles(markers,player)
     pygame.display.update()
 

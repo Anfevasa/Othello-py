@@ -1,7 +1,5 @@
 # import pygame
-from pygame.locals import *
-
-
+# from pygame.locals import *
 
 
 def up_search(markers,player,x_pos,y_pos,possibles):
@@ -61,7 +59,7 @@ def left_search(markers,player,x_pos,y_pos,possibles):
     return
 
 def up_left_search(markers,player,x_pos,y_pos,possibles):
-    if markers[x_pos-1][y_pos-1] == player*-1:
+    if x_pos>=2 and y_pos>=2 and markers[x_pos-1][y_pos-1] == player*-1:
         x_iter = list(reversed(range(0,x_pos-1)))
         y_iter = list(reversed(range(0,y_pos-1)))
         xy_iter = [ (x_iter[i],y_iter[i]) for i in range(min(len(x_iter),len(y_iter))) ]
@@ -77,9 +75,43 @@ def up_left_search(markers,player,x_pos,y_pos,possibles):
     return
 
 def up_right_search(markers,player,x_pos,y_pos,possibles):
-    if markers[x_pos+1][y_pos-1] == player*-1:
+    if x_pos<=5 and y_pos>=2 and markers[x_pos+1][y_pos-1] == player*-1:
         x_iter = list(range(x_pos+2,8))
         y_iter = list(reversed(range(0,y_pos-1)))
+        xy_iter = [ (x_iter[i],y_iter[i]) for i in range(min(len(x_iter),len(y_iter))) ]
+        # print("xy iter: ", xy_iter)
+        for xy in xy_iter:
+            if markers[xy[0]][xy[1]] is None:
+                # print("Acá puede ser, arriba izq:",xy[0],xy[1] )
+                possibles[xy[0]][xy[1]]  = player*2
+                return (xy[0],xy[1])
+            if markers[xy[0]][xy[1]] == player:
+                return
+            if markers[xy[0]][xy[1]] == player*-1:
+                continue
+    return
+
+def down_right_search(markers,player,x_pos,y_pos,possibles):
+    if x_pos<=5 and y_pos<=5 and markers[x_pos+1][y_pos+1] == player*-1:
+        x_iter = list(range(x_pos+2,8))
+        y_iter = list(range(y_pos+2,8))
+        xy_iter = [ (x_iter[i],y_iter[i]) for i in range(min(len(x_iter),len(y_iter))) ]
+        # print("xy iter: ", xy_iter)
+        for xy in xy_iter:
+            if markers[xy[0]][xy[1]] is None:
+                # print("Acá puede ser, arriba izq:",xy[0],xy[1] )
+                possibles[xy[0]][xy[1]]  = player*2
+                return (xy[0],xy[1])
+            if markers[xy[0]][xy[1]] == player:
+                return
+            if markers[xy[0]][xy[1]] == player*-1:
+                continue
+    return
+
+def down_left_search(markers,player,x_pos,y_pos,possibles):
+    if x_pos>=1 and y_pos<=5 and markers[x_pos-1][y_pos+1] == player*-1:
+        x_iter = list(reversed(range(0,x_pos-1)))
+        y_iter = list(range(y_pos+2,8))
         xy_iter = [ (x_iter[i],y_iter[i]) for i in range(min(len(x_iter),len(y_iter))) ]
         # print("xy iter: ", xy_iter)
         for xy in xy_iter:
@@ -112,6 +144,9 @@ def get_possibles(markers,player):
                 left_search(markers,player,x_pos,y_pos,possibles)
                 up_left_search(markers,player,x_pos,y_pos,possibles)
                 up_right_search(markers,player,x_pos,y_pos,possibles)
+                down_right_search(markers,player,x_pos,y_pos,possibles)
+                down_left_search(markers,player,x_pos,y_pos,possibles)
+                
                 # print("terminé busqueda", "-"*30)
             y_pos += 1
         x_pos += 1
