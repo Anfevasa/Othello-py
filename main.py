@@ -17,8 +17,8 @@ for i in range(8):
     row=[None]*8
     markers.append(row)
 
-markers[3][3] = markers[4][4] = 1
-markers[3][4] = markers[4][3] =-1
+markers[3][3] = markers[4][4] =-1
+markers[3][4] = markers[4][3] = 1
 possibles = get_possibles(markers,player)
 
 def print_board():
@@ -74,13 +74,11 @@ while run:
             pos = pygame.mouse.get_pos()
             cell_x = pos[0]//100
             cell_y = pos[1]//100
-            # if possibles[cell_x][cell_y] is not None: 
-            if markers[cell_x][cell_y] is None:
+            if possibles[cell_x][cell_y] is not None: 
+            # if markers[cell_x][cell_y] is None:
                 markers[cell_x][cell_y] = player
-                # draw_possibles(markers,player) 
+                get_new_markers(markers,player,pos=(cell_x,cell_y))
                 player *=-1
-                # print_board()
-                
                 possibles = get_possibles(markers,player)
     pygame.display.update()
 
