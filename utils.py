@@ -139,59 +139,68 @@ def get_possibles(markers,player):
 
 def up_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[1]>=2 and markers[pos[0]][pos[1]-1] == player*-1:
         for y in list(reversed(range(0,pos[1]))):
             if markers[pos[0]][y] == player*-1:
                 changes.append((pos[0],y))
             elif markers[pos[0]][y] == player:
+                final_changes += changes
                 break
             elif markers[pos[0]][y] is None:
                 changes = []
                 break
         
-    return changes
+    return final_changes
 
 def down_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[1]<=5 and markers[pos[0]][pos[1]+1] == player*-1:
         for y in range(pos[1]+1,8):
             if markers[pos[0]][y] == player*-1:
                 changes.append((pos[0],y))
             elif markers[pos[0]][y] == player:
+                final_changes += changes
                 break
             elif markers[pos[0]][y] is None:
                 changes = []
                 break
-    return changes
+    return final_changes
 
 def right_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[0]<=5 and markers[pos[0]+1][pos[1]] == player*-1:
         for x in range(pos[0]+1,8):
             if markers[x][pos[1]] == player*-1:
                 changes.append((x,pos[1]))
             elif markers[x][pos[1]] == player:
+                final_changes += changes
                 break
             elif markers[x][pos[1]] is None:
                 changes = []
                 break
-    return changes
+    return final_changes
 
 def left_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[0]>=2 and markers[pos[0]-1][pos[1]] == player*-1:
         for x in list(reversed(range(0,pos[0]))):
             if markers[x][pos[1]] == player*-1:
                 changes.append((x,pos[1]))
             elif markers[x][pos[1]] == player:
+                final_changes += changes
                 break
             elif markers[x][pos[1]] is None:
                 changes = []
                 break
-    return changes
+    return final_changes
 
 def up_left_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[0]>=2 and pos[1]>=2 and markers[pos[0]-1][pos[1]-1] == player*-1:
         x_iter = list(reversed(range(0,pos[0])))
         y_iter = list(reversed(range(0,pos[1])))
@@ -200,14 +209,16 @@ def up_left_change(markers,player,pos):
             if markers[xy[0]][xy[1]] == player*-1:
                 changes.append((xy[0],xy[1]))
             elif markers[xy[0]][xy[1]] == player:
+                final_changes += changes
                 break
             elif markers[xy[0]][xy[1]] is None:
                 changes = []
                 break
-    return changes
+    return final_changes
 
 def up_right_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[0]<=5 and pos[1]>=2 and markers[pos[0]+1][pos[1]-1] == player*-1:
         x_iter = list(range(pos[0]+1,8))
         y_iter = list(reversed(range(0,pos[1])))
@@ -216,14 +227,16 @@ def up_right_change(markers,player,pos):
             if markers[xy[0]][xy[1]] == player*-1:
                 changes.append((xy[0],xy[1]))
             elif markers[xy[0]][xy[1]] == player:
+                final_changes += changes
                 break
             elif markers[xy[0]][xy[1]] is None:
                 changes = []
                 break
-    return changes
+    return final_changes
 
 def down_right_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[0]<=5 and pos[1]<=5 and markers[pos[0]+1][pos[1]+1] == player*-1:
         x_iter = list(range(pos[0]+1,8))
         y_iter = list(range(pos[1]+1,8))
@@ -232,14 +245,16 @@ def down_right_change(markers,player,pos):
             if markers[xy[0]][xy[1]] == player*-1:
                 changes.append((xy[0],xy[1]))
             elif markers[xy[0]][xy[1]] == player:
+                final_changes += changes
                 break
             elif markers[xy[0]][xy[1]] is None:
                 changes = []
                 break
-    return changes
+    return final_changes
 
 def down_left_change(markers,player,pos):
     changes = []
+    final_changes = []
     if pos[0]>=2 and pos[1]<=5 and markers[pos[0]-1][pos[1]+1] == player*-1:
         x_iter = list(reversed(range(0,pos[0])))
         y_iter = list(range(pos[1]+1,8))
@@ -248,11 +263,12 @@ def down_left_change(markers,player,pos):
             if markers[xy[0]][xy[1]] == player*-1:
                 changes.append((xy[0],xy[1]))
             elif markers[xy[0]][xy[1]] == player:
+                final_changes += changes
                 break
             elif markers[xy[0]][xy[1]] is None:
                 changes = []
                 break
-    return changes
+    return final_changes
 
 
 def get_new_markers(markers,player,pos):
